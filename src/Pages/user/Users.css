@@ -1,0 +1,27 @@
+.div123 {
+    width: 87%;
+    margin-left: 150px;
+    background-color: #101827;
+    color: white;
+}
+
+.df {
+    display: flex;
+}
+
+.form-control1 {
+    width: 300px;
+    height: 40px;
+}
+
+.cards {
+    flex-wrap: wrap;
+}
+
+.navbar1 {
+    width: 100%;
+    position: fixed;
+    justify-content: center;
+    background-color: #101827;
+    padding-top: 10px;
+}

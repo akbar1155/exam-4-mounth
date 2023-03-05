@@ -1,0 +1,35 @@
+.nav__list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    height: 100%;
+    width: 150px;
+    z-index: 999;
+    font-size: 20px;
+    position: fixed;
+    background-color: #151E2F;
+}
+.addproduct{
+    margin-left: 65%;
+}
+.nav__item-link {
+    text-decoration: none;
+    color: #fff;    
+}
+.sort1{
+    width: 100%;
+    
+}
+.filter1{
+    margin-left: 50%;
+}
+.filter2{
+    margin-left: 600px;
+}
+.cards {
+    display: flex;
+    margin-top: 180px;
+    list-style-type: none;
+    row-gap: 10px;
+    column-gap: 10px;
+}

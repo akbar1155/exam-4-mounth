@@ -1,0 +1,34 @@
+.product{
+    background-color: #101827;
+}
+.itemcard{
+    background-color: #101827;
+}
+/* .product2{
+    margin-left: ;
+} */
+.product3{
+    margin-left: 150px;
+}
+.itemcard{
+    margin-left: 150px;
+    margin-top: 118px;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+.product1{
+    color: white;
+}
+/* .navbar1{ */
+    /* margin-left: 150px; */
+/* } */
+.usernavbar1{
+    margin-left: 150px;
+}
+.inputsearch1{
+    margin-left: 150px;
+}
