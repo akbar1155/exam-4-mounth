@@ -1,0 +1,7 @@
+.modal-backdrop{
+    position:static !important;
+    z-index: 1 !important;
+}
+.modal-dialog{
+z-index: 10 !important;
+}

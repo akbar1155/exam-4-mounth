@@ -16,7 +16,7 @@
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    width: 87%;
     column-gap: 10px;
     row-gap: 10px;
 }

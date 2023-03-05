@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Users.css';
 import { FaRegMoon, FaFilter } from 'react-icons/fa'
 import { TbArrowsDownUp } from 'react-icons/tb'
 import { AiOutlinePlusCircle, AiOutlineMenuFold, AiFillEdit } from 'react-icons/ai'
 import { CgMenuGridR } from 'react-icons/cg'
-import { BsTrash3 } from 'react-icons/bs'
 import Navbar from '../../Components/nav/Navbar';
 import Modal from '../../Components/modal/Modal';
 import { NavLink } from 'react-router-dom';
 
 const Users = () => {
 
-    const [users, setUsers] = React.useState([]);
+    const [users, setUsers] = React.useState(JSON.parse(window.localStorage.getItem('users')) || []);
 
-    fetch('https://api.escuelajs.co/api/v1/users')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            setUsers(data)
-        });
+    useEffect(() => {
+        fetch('https://api.escuelajs.co/api/v1/users')
+            .then((response) => {
+                return response.json();
+            }).then((data) => {
+                window.localStorage.setItem('users', JSON.stringify(data))
+                setUsers(data)
+            });
+    }, [])
+
+
+    const handleDeleteTodo = (evt) => {
+        const todoId = evt.target.dataset.todoId
+        const filteredTodos = users.filter(row => row.id != todoId - 0)
+        setUsers([...filteredTodos]);
+        window.localStorage.setItem('users', JSON.stringify([...filteredTodos]))
+    }
 
     return (
         <div className='div12'>
@@ -32,11 +41,11 @@ const Users = () => {
                         <div className='addproduct'>
                             <FaRegMoon />
                             <span className="header__wrap-nav">
-                                <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <AiOutlinePlusCircle />
                                     Add product
                                 </button>
-                                <Modal />
+                                <Modal users={users} setUsers={setUsers} />
                             </span>
                         </div>
                     </div>
@@ -72,7 +81,7 @@ const Users = () => {
                                 <p>{user.email}</p>
                                 <span>
                                     <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> <AiFillEdit /></button>
-                                    <button><BsTrash3 /></button>
+                                    <button type='button' data-todo-id={user.id} onClick={handleDeleteTodo}>delete</button>
                                 </span>
                             </li>
                         ))}

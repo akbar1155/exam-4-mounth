@@ -11,62 +11,84 @@ import Navbar from '../../Components/nav/Navbar';
 import Modal from '../../Components/modal/Modal';
 import { NavLink } from 'react-router-dom';
 
-const Product = () => {
-    const [products, setProducts] = React.useState([]);
+const Products = () => {
 
-    fetch('https://api.escuelajs.co/api/v1/products')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            setProducts(data)
-        });
-    return (
-        <div className='product1'>
-            <Navbar />
-            <div className='pruduct2'>
-                <div className='navbar1'>
-                    <div className='df usernavbar usernavbar1'>
-                        <h1>Users</h1>
-                        <div className='addproduct'>
-                            <FaRegMoon />
-                            <span className="header__wrap-nav">
-                                <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    <AiOutlinePlusCircle />
-                                    Add product
-                                </button>
-                                <Modal />
+    const [product, setUsers] = React.useState(JSON.parse(window.localStorage.getItem('product')) || []);
+    useEffect(() => {
+        fetch('https://api.escuelajs.co/api/v1/product')
+            .then((response) => {
+                return response.json();
+            }).then((data) => {
+                window.localStorage.setItem('product', JSON.stringify(data))
+                Products(data)
+            });
+    }, [])
+
+
+
+    const handleDeleteTodo = (evt) => {
+        const todoId = evt.target.dataset.todoId
+        const filteredTodos = product.filter(row => row.id != todoId - 0)
+        setUsers([...filteredTodos]);
+        window.localStorage.setItem('product', JSON.stringify([...filteredTodos]))
+    }
+
+    const Product = () => {
+        const [products, setProducts] = React.useState([]);
+
+        fetch('https://api.escuelajs.co/api/v1/products')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setProducts(data)
+            });
+        return (
+            <div className='product1'>
+                <Navbar />
+                <div className='pruduct2'>
+                    <div className='navbar1'>
+                        <div className='df usernavbar usernavbar1'>
+                            <h1>Users</h1>
+                            <div className='addproduct'>
+                                <FaRegMoon />
+                                <span className="header__wrap-nav">
+                                    <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <AiOutlinePlusCircle />
+                                        Add product
+                                    </button>
+                                    <Modal />
+                                </span>
+                            </div>
+                        </div>
+                        <div className='df inputsearch inputsearch1'>
+                            <input className='form-control1' type="text" />
+                            <span className='df filter1 filter2'>
+                                <button>Filter <FaFilter /></button>
+                                <NavLink to='/user'><AiOutlineMenuFold /></NavLink>
+                                <NavLink to='/product'><CgMenuGridR /></NavLink>
                             </span>
                         </div>
                     </div>
-                    <div className='df inputsearch inputsearch1'>
-                        <input className='form-control1' type="text" />
-                        <span className='df filter1 filter2'>
-                            <button>Filter <FaFilter /></button>
-                            <NavLink to='/user'><AiOutlineMenuFold /></NavLink>
-                            <NavLink to='/product'><CgMenuGridR /></NavLink>
-                        </span>
-                    </div>
                 </div>
-            </div>
-            <div>
-                <ul className='itemcard'>
-                    {products.map(product => (
-                        <li key={product.id}>
-                            <img width={'200px'} height={'200px'} src={product.category.image} alt={product.category.name} />
-                            <h4>{product.category.name}</h4>
-                            <p>{product.price}</p>
-                            <span>
-                                <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> <AiFillEdit /></button>
-                                <button><BsTrash3 /></button>
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                <div>
+                    <ul className='itemcard'>
+                        {products.map(product => (
+                            <li key={product.id}>
+                                <img width={'200px'} height={'200px'} src={product.category.image} alt={product.category.name} />
+                                <h4>{product.category.name}</h4>
+                                <p>{product.price}</p>
+                                <span>
+                                    <button type="button" className="header__wrap-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> <AiFillEdit /></button>
+                                    <button type='button' data-todo-id={product.id} onClick={handleDeleteTodo}>delete</button>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-        </div>
-    );
+            </div>
+        );
+    }
 }
-
-export default Product;
+export default Products;
