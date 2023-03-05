@@ -28,7 +28,7 @@ const Users = () => {
                 <div className='navbar1'>
 
                     <div className='df usernavbar'>
-                        <h1>Users</h1>
+                        <h1>User</h1>
                         <div className='addproduct'>
                             <FaRegMoon />
                             <span className="header__wrap-nav">
